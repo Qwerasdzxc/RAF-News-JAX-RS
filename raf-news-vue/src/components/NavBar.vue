@@ -26,13 +26,13 @@
               <b-dropdown-item href="#"  v-for="category in categories" :key="category.name"  @click="find(category.categoryId)">{{category.name}}</b-dropdown-item>
             </b-dropdown>
             <li v-if="canLogout" class="nav-item">
-              <router-link :to="{name: 'CreateNews'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateNews'}">Create News</router-link>
+              <router-link :to="{name: 'CreateNews'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateNews'}">News CMS</router-link>
             </li>
             <li  v-if="canLogout" class="nav-item">
-              <router-link :to="{name: 'CreateCategory'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateCategory'}">Create Category</router-link>
+              <router-link :to="{name: 'CreateCategory'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateCategory'}">Category CMS</router-link>
             </li>
-            <li v-if="canLogout" class="nav-item">
-              <router-link :to="{name: 'CreateUser'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateUser'}">Create User</router-link>
+            <li v-if="isAdmin" class="nav-item">
+              <router-link :to="{name: 'CreateUser'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateUser'}">User CMS</router-link>
             </li>
           </ul>
           <form v-if="canLogout" class="d-flex" @submit.prevent="logout">
@@ -45,11 +45,21 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode';
+
 export default {
   name: "NavBar",
   computed: {
     canLogout() {
-      return this.$route.name !== 'Login';
+      return this.$route.name !== 'Login' && localStorage.getItem('jwt') != null;
+    },
+    isAdmin() {
+      const jwt = localStorage.getItem('jwt');
+      if (jwt === null)
+        return false;
+
+      const decoded = jwt_decode(jwt);
+      return decoded.isAdmin;
     }
   },
   data() {

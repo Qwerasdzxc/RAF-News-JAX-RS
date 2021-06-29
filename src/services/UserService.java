@@ -48,6 +48,9 @@ public class UserService {
         if (user == null || !user.getPassword().equals(password)) {
             return null;
         }
+        
+        if (!user.isActive())
+        	return null;
 
         Date issuedAt = new Date();
         Date expiresAt = new Date(issuedAt.getTime() + 24 * 60 * 60 * 1000); // One day
@@ -58,7 +61,7 @@ public class UserService {
         return JWT.create()
                 .withIssuedAt(issuedAt)
                 .withExpiresAt(expiresAt)
-                .withSubject(email)
+                .withSubject(String.valueOf(user.getUserId()))
                 .withClaim("isAdmin", user.isAdmin())
                 .sign(algorithm);
     }
@@ -68,8 +71,8 @@ public class UserService {
         JWTVerifier verifier = JWT.require(algorithm).build();
         DecodedJWT jwt = verifier.verify(token);
         
-        String email = jwt.getSubject();
-        User user = repository.getUserByEmail(email);
+        String id = jwt.getSubject();
+        User user = repository.getUser(Integer.parseInt(id));
 
         return user != null;
     }

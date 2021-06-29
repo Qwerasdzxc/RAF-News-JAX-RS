@@ -67,6 +67,7 @@
 
 <script>
 
+import jwt_decode from 'jwt-decode';
 
 export default {
   name: "CreateNews",
@@ -87,16 +88,12 @@ export default {
       category: [],
       categories: [],
       selectKorisnici: [],
-      users: [],
       newsList: []
     }
   },
   mounted() {
     this.$axios.get('categories?page=1').then((response) => {
       this.categories = response.data;
-    });
-    this.$axios.get('users?page=1').then((response) => {
-      this.users = response.data;
     });
     this.$axios.get('news/all?page=1').then((response) => {
       this.newsList = response.data;
@@ -117,11 +114,17 @@ export default {
       this.$router.push(`/news/update/${id}`)
     },
     postNews(){
+      const jwt = localStorage.getItem('jwt');
+      if (jwt === null)
+        return;
+
+      const decoded = jwt_decode(jwt);
+
       this.$axios.post(`news`, {
         "title": this.title,
         "content": this.content,
-        "authorId": 1,
-        "categoryId":1
+        "authorId": parseInt(decoded.sub),
+        "categoryId": this.selectedCategory.categoryId
 
       }).then(() => {
         window.location.reload();

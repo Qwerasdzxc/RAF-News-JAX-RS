@@ -6,7 +6,7 @@
     </h2>
 
     <h6 style="margin-top: 18px">
-      Category: {{news.categoryId}}
+      Category: {{category != null ? category.name : ""}}
     </h6>
 
     <div v-if="tags">
@@ -16,7 +16,7 @@
     </h6>
     </div>
     <h5  style="margin-top: 12px">
-      Author: {{ news.authorId }}
+      Author: {{ author != null ? author.name : "" }}
     </h5>
 
     <h6  style="margin-top: 12px">
@@ -84,7 +84,9 @@ export default {
       comments: [],
       authorName: null,
       content: null,
+      author: null,
       created: null,
+      category: null
     }
   },
   mounted() {
@@ -93,7 +95,19 @@ export default {
     })
     this.$axios.get(`comments/${this.$route.params.id}`).then((response) => {
         this.comments = response.data;
-    })
+    });
+    this.$axios.get(`news/${this.$route.params.id}`).then((response) => {
+        this.$axios.get(`categories/${response.data.categoryId}`).then((response) => {
+          this.category = response.data;
+        });
+        this.$axios.get(`users/${response.data.authorId}`).then((response) => {
+          this.author = response.data;
+        })
+    });
+    
+  },
+  created() {
+
   },
   methods: {
     postComment(){

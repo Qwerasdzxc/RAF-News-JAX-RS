@@ -38,11 +38,9 @@
   </div>
 </template>
 <script>
-// import NewsCom from "../components/NewsCom";
 export default {
   name: "NewsByCategory",
 
-//   components: {NewsCom},
   filters: {
     shortText(value) {
       if (value.length < 30) {
@@ -74,12 +72,6 @@ export default {
 
     });
   },
-  // mounted() {
-  //   this.$axios.get(`/api/news/kategorija/${this.$route.params.kategorija}`).then((response) => {
-  //     this.vest = response.data;
-  //     console.log(response)
-  //   });
-  // }
 }
 </script>
 

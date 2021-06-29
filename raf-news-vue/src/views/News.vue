@@ -16,7 +16,7 @@
 
           <tbody >
 
-          <tr v-for="news in newsList" :key="news.id" @click="
+          <tr v-for="news in newsList" :key="news.newsId" @click="
           find(news.newsId)">
 
             <b-card style="margin-top: 10px">
@@ -58,11 +58,6 @@ export default {
         this.$router.push(`/news/${id}`);
     }
   },
-  // methods: {
-  //   navigateTo(route) {
-  //     this.$router.push(route)
-  //   }
-  // },
   mounted() {
     this.$axios.get('news/all?page=1').then((response) => {
       this.newsList = response.data;

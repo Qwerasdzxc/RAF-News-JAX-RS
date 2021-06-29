@@ -16,5 +16,6 @@ public interface UserRepository {
 	
 	User updateUser(int userId, String email, String name, String surname, boolean isAdmin);
 	
+	void changeUserStatus(int userId);
 	
 }

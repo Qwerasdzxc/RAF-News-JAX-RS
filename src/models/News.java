@@ -25,6 +25,8 @@ public class News {
 	private String content;
 
 	private Date created;
+	
+	public News() {}
 
 	public News(int newsId, Integer categoryId, Integer authorId, int viewCount, String title, String content, Date created) {
 		this.newsId = newsId;

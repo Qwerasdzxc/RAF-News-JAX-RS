@@ -16,7 +16,7 @@
 
           <tbody >
 
-          <tr v-for="news in newsList" :key="news.id" @click="find(news.newsId)">
+          <tr v-for="news in newsList" :key="news.newsId" @click="find(news.newsId)">
 
             <b-card style="margin-top: 10px">
             <td scope="row"> {{ news.title }}</td>

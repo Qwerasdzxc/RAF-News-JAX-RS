@@ -17,6 +17,13 @@ public class CategoryResource {
 	private CategoryService service;
 	
 	@GET
+	@Path("/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Category findById(@PathParam("id") int categoryId) {
+		return service.findById(categoryId);
+	}
+	
+	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<Category> getCategories(@QueryParam("page") int page) {
 		return service.getCategories(page);

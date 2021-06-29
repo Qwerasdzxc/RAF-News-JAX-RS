@@ -10,6 +10,8 @@ public class Tag {
 	@NotNull(message = "Keyword field is required")
 	@NotEmpty(message = "Keyword field is required")
 	private String keyword;
+	
+	public Tag() {}
 
 	public Tag(int tagId, String keyword) {
 		this.tagId = tagId;

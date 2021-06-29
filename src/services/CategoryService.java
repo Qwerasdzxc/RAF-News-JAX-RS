@@ -12,6 +12,10 @@ public class CategoryService {
 	@Inject
 	private CategoryRepository repository;
 	
+	public Category findById(int categoryId) {
+		return repository.findById(categoryId);
+	}
+	
 	public List<Category> getCategories(int page) {
 		return repository.getCategories(page);
 	}

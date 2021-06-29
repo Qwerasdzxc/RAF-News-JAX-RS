@@ -1,12 +1,10 @@
-package models;
+package requests;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-public class User {
+public class UpdateUserRequest {
 	
-	private int userId;
-
 	@NotNull(message = "Email is required")
 	@NotEmpty(message = "Email is required")
 	private String email;
@@ -19,34 +17,10 @@ public class User {
 	@NotEmpty(message = "Surname is required")
 	private String surname;
 
-	@NotNull(message = "Password is required")
-	@NotEmpty(message = "Password is required")
-	private String password;
-
 	@NotNull(message = "Is Admin is required")
 	private Boolean isAdmin;
 	
-	private Boolean isActive;
-	
-	public User() {}
-	
-	public User(int userId, String email, String name, String surname, String password, Boolean isAdmin, Boolean isActive) {
-		this.userId = userId;
-		this.email = email;
-		this.name = name;
-		this.surname = surname;
-		this.password = password;
-		this.isAdmin = isAdmin;
-		this.isActive = isActive;
-	}
-	
-	public int getUserId() {
-		return userId;
-	}
-	
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+	public UpdateUserRequest() {}
 
 	public String getEmail() {
 		return email;
@@ -72,27 +46,11 @@ public class User {
 		this.surname = surname;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public Boolean isAdmin() {
 		return isAdmin;
 	}
 
 	public void setAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
-	}
-
-	public Boolean isActive() {
-		return isActive;
-	}
-
-	public void setActive(Boolean isActive) {
-		this.isActive = isActive;
 	}
 }

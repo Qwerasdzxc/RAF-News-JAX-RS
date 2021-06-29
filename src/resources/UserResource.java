@@ -16,8 +16,11 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import models.User;
 import requests.LoginRequest;
+import requests.UpdateUserRequest;
 import services.UserService;
 
 @Path("/users")
@@ -32,7 +35,7 @@ public class UserResource {
     public Response login(@Valid LoginRequest loginRequest) {
         Map<String, String> response = new HashMap<>();
 
-        String jwt = service.login(loginRequest.getEmail(), loginRequest.getPassword());
+        String jwt = service.login(loginRequest.getEmail(), DigestUtils.sha256Hex(loginRequest.getPassword()));
         if (jwt == null) {
             response.put("message", "These credentials do not match our records");
             return Response.status(422, "Unprocessable Entity").entity(response).build();
@@ -48,6 +51,12 @@ public class UserResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getUser(@PathParam("userId") int userId) {
 		return service.getUser(userId);
+	}
+	
+	@PUT
+	@Path("/change-status/{userId}")
+	public void changeUserStatus(@PathParam("userId") int userId) {
+		service.changeUserStatus(userId);
 	}
 	
 	@GET
@@ -66,13 +75,13 @@ public class UserResource {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public User createUser(@Valid User user) {
-		return service.createUser(user.getEmail(), user.getName(), user.getSurname(), user.getPassword(), user.isAdmin());
+		return service.createUser(user.getEmail(), user.getName(), user.getSurname(), DigestUtils.sha256Hex(user.getPassword()), user.isAdmin());
 	}
 	
 	@PUT
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User updateUser(@PathParam("userId") int userId, @Valid User user) {
+	public User updateUser(@PathParam("userId") int userId, @Valid UpdateUserRequest user) {
 		return service.updateUser(userId, user.getEmail(), user.getName(), user.getSurname(), user.isAdmin());
 	}
 }

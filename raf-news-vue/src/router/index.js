@@ -15,17 +15,39 @@ const routes = [
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/News.vue')
   },
-//   {
-//     path: '/news/popular',
-//     name: 'Popular',
-//     meta: {
-//       authRequired: false,
-//     },
-//     // route level code-splitting
-//     // this generates a separate chunk (about.[hash].js) for this route
-//     // which is lazy-loaded when the route is visited.
-//     component: () => import(/* webpackChunkName: "about" */ '../views/Popular.vue')
-//   },
+  {
+    path: '/news/popular',
+    name: 'Popular',
+    meta: {
+      authRequired: false,
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Popular.vue')
+  },
+  {
+    path: '/news/recent',
+    name: 'Recent',
+    meta: {
+      authRequired: false,
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/Recent.vue')
+  },
+  {
+    path: '/news/search',
+    name: 'SearchNews',
+    meta: {
+      authRequired: false,
+    },
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/SearchNews.vue')
+  },
   {
     path: '/news/:id',
     name: 'NewsDetailsView',
@@ -63,37 +85,37 @@ const routes = [
     path: '/users/login',
     name: 'Login',
     component: () => import(/* webpackChunkName: "about" */ '../views/Login.vue')
-  }
-//   {
-//     path: '/news',
-//     name: 'CreateNews',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/CreateNews.vue')
-//   },
-//   {
-//     path: '/category',
-//     name: 'CreateCategory',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/CreateCategory.vue')
-//   },
-//   {
-//     path: '/users',
-//     name: 'CreateUser',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/CreateUser.vue')
-//   },
-//   {
-//     path: '/users/:email',
-//     name: 'SingleUser',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/SingleUser.vue')
-//   },
-//   {
-//     path: '/category/:id',
-//     name: 'UpdateCategory',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/UpdateCategory.vue')
-//   },
-//   {
-//     path: '/news/update/:id',
-//     name: 'UpdateNews',
-//     component: () => import(/* webpackChunkName: "about" */ '../views/UpdateNews.vue')
-//   },
+  },
+  {
+    path: '/news',
+    name: 'CreateNews',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateNews.vue')
+  },
+  {
+    path: '/category',
+    name: 'CreateCategory',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateCategory.vue')
+  },
+  {
+    path: '/users',
+    name: 'CreateUser',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateUser.vue')
+  },
+  {
+    path: '/user/update/:id',
+    name: 'UpdateUser',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UpdateUser.vue')
+  },
+  {
+    path: '/category/update/:id',
+    name: 'UpdateCategory',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UpdateCategory.vue')
+  },
+  {
+    path: '/news/update/:id',
+    name: 'UpdateNews',
+    component: () => import(/* webpackChunkName: "about" */ '../views/UpdateNews.vue')
+  },
 ]
 
 const router = new VueRouter({

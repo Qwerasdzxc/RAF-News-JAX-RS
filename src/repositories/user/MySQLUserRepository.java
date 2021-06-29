@@ -50,6 +50,48 @@ public class MySQLUserRepository extends MySQLAbstractRepository implements User
 	}
 	
 	@Override
+	public void changeUserStatus(int userId) {
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = this.newConnection();
+            
+            // Check if user exists:
+            preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE userId = ? ");
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+            
+            if (!resultSet.next())
+            	throw new Exception();
+            
+            boolean isActive = resultSet.getBoolean("isActive");
+            
+            
+            // Update user:
+            closeStatement(preparedStatement);
+            closeResultSet(resultSet);
+            preparedStatement = connection.prepareStatement("UPDATE user AS u SET u.isActive = ? WHERE u.userId = ?");
+            preparedStatement.setBoolean(1, !isActive);
+            preparedStatement.setInt(2, userId);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                this.closeResultSet(resultSet);
+            }
+            this.closeStatement(preparedStatement);
+            this.closeConnection(connection);
+        }
+	}
+	
+	@Override
 	public User getUserByEmail(String email) {
         User user = null;
 

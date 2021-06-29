@@ -14,6 +14,8 @@ public class Category {
     @NotNull(message = "Description field is required")
     @NotEmpty(message = "Description field is required")
 	private String description;
+    
+    public Category() {}
 		
 	public Category(int categoryId, String name, String description) {
 		this.categoryId = categoryId;

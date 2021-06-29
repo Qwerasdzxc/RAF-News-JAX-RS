@@ -5,6 +5,8 @@ import java.util.List;
 import models.Category;
 
 public interface CategoryRepository {
+	
+	Category findById(int categoryId);
 
 	List<Category> getCategories(int page);
 	

@@ -298,6 +298,7 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
             preparedStatement.setInt(1, categoryId);
             preparedStatement.setString(2, title);
             preparedStatement.setString(3, content);
+            preparedStatement.setInt(4, newsId);
             preparedStatement.executeUpdate();
             
             resultSet = preparedStatement.getResultSet();

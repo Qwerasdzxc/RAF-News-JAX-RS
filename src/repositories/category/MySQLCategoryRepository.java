@@ -10,6 +10,42 @@ import repositories.MySQLAbstractRepository;
 public class MySQLCategoryRepository extends MySQLAbstractRepository implements CategoryRepository {
 
 	@Override
+	public Category findById(int categoryId) {
+		Category category = null;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = this.newConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM category WHERE categoryId = ?");
+            preparedStatement.setInt(1, categoryId);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+
+                category = new Category(categoryId, name, description);
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeStatement(preparedStatement);
+            this.closeResultSet(resultSet);
+            this.closeConnection(connection);
+        }
+
+        return category;
+	}
+	
+	@Override
 	public List<Category> getCategories(int page) {
 		List<Category> categories = new ArrayList<Category>();
 
@@ -111,7 +147,7 @@ public class MySQLCategoryRepository extends MySQLAbstractRepository implements 
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             
-            if (resultSet == null || !resultSet.next())
+            if (resultSet.next())
             	throw new Exception();
            
             
@@ -183,6 +219,8 @@ public class MySQLCategoryRepository extends MySQLAbstractRepository implements 
             preparedStatement = connection.prepareStatement("SELECT COUNT(*) AS total FROM news as n WHERE n.categoryId = ?");
             preparedStatement.setInt(1, categoryId);
             resultSet = preparedStatement.executeQuery();
+            
+            resultSet.next();
             int count = resultSet.getInt("total");
             if (count > 0)
             	throw new Exception();

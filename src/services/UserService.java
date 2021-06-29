@@ -22,6 +22,10 @@ public class UserService {
 		return repository.getUser(userId);
 	}
 	
+	public void changeUserStatus(int userId) {
+		repository.changeUserStatus(userId);
+	}
+	
 	public User getUserByEmail(String email) {
 		return repository.getUserByEmail(email);
 	}

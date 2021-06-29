@@ -1,48 +1,50 @@
 <template>
   <div class="news" style="text-align: center">
-    <h1 class="mt-4">News</h1>
+    <h1 class="mt-4">Recent</h1>
 
     <div class="row" style="display:inline;">
       <div class="col-4 mx-auto" >
-        <table class=" table text-center" style="width: 650px;margin-left: -150px;">
-
+        <table class=" table text-center" style="width: 800px;margin-left: -250px;">
           <thead>
           <tr>
             <th scope="col">Title</th>
+            <th scope="col">Visits</th>
             <th scope="col">Created</th>
             <th scope="col">Content</th>
           </tr>
           </thead>
-
-          <tbody >
-
+          <tbody>
           <tr v-for="news in newsList" :key="news.newsId" @click="find(news.newsId)">
 
             <b-card style="margin-top: 10px">
-              <td scope="row"> {{ news.title }}</td>
+            <td scope="row">{{ news.title }}</td>
+            </b-card>
+            <td>{{ news.viewCount }}</td>
+            <td>{{ new Date(news.created)}}</td>
+            <b-card style="margin-top: 10px">
+            <td>{{ news.content | shortText }}</td>
             </b-card>
 
-            <td>{{new Date(news.created) }}</td>
-            <td>{{ news.content | shortText }}</td>
-
           </tr>
-
           </tbody>
-
         </table>
       </div>
-      <div class="col-6" >
-        <NewsCom v-if="selectedNews" :news="selectedNews"></NewsCom>
+      <div class="col-6">
+        <NewsDetails v-if="selectedNews" :news="selectedNews"></NewsDetails>
       </div>
     </div>
   </div>
-</template>
-<script>
-// import NewsCom from "../components/NewsCom";
-export default {
-  name: "NewsByCategory",
 
-//   components: {NewsCom},
+
+</template>
+
+
+<script>
+import NewsDetails from "../components/NewsDetails";
+
+export default {
+
+  components: {NewsDetails},
   filters: {
     shortText(value) {
       if (value.length < 30) {
@@ -54,35 +56,19 @@ export default {
   data() {
     return {
       selectedNews: null,
-      newsList: [],
-      componentKey: 0,
-
+      newsList: []
     }
   },
   methods: {
     find(id) {
       this.$router.push(`/news/${id}`);
 
-    },
-    forceRerender() {
-      this.componentKey += 1;
     }
   },
   mounted() {
-    this.$axios.get(`news/news-for-category?page=1&categoryId=${this.$route.params.id}`).then((response) => {
+    this.$axios.get('news/recent-news').then((response) => {
       this.newsList = response.data;
-
     });
-  },
-  // mounted() {
-  //   this.$axios.get(`/api/news/kategorija/${this.$route.params.kategorija}`).then((response) => {
-  //     this.vest = response.data;
-  //     console.log(response)
-  //   });
-  // }
+  }
 }
 </script>
-
-<style scoped>
-
-</style>

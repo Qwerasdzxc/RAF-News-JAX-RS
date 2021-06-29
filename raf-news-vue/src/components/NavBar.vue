@@ -13,21 +13,27 @@
             <li class="nav-item">
               <router-link :to="{name: 'News'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'News'}">News</router-link>
             </li>
-            <!-- <li class="nav-item">
+            <li class="nav-item">
+              <router-link :to="{name: 'Recent'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'Recent'}">Recent</router-link>
+            </li>
+            <li class="nav-item">
               <router-link :to="{name: 'Popular'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'Popular'}">Popular</router-link>
-            </li> -->
+            </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'SearchNews'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'SearchNews'}">Search</router-link>
+            </li>
             <b-dropdown text="Categories"   variant="secondary" class="e-auto mb-2 mb-lg-0" style="height: 35px; margin-top: 5px">
               <b-dropdown-item href="#"  v-for="category in categories" :key="category.name"  @click="find(category.categoryId)">{{category.name}}</b-dropdown-item>
             </b-dropdown>
-            <!-- <li v-if="canLogout" class="nav-item">
+            <li v-if="canLogout" class="nav-item">
               <router-link :to="{name: 'CreateNews'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateNews'}">Create News</router-link>
             </li>
             <li  v-if="canLogout" class="nav-item">
-              <router-link :to="{name: 'CreateCategory'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'AddCategory'}">Create Category</router-link>
+              <router-link :to="{name: 'CreateCategory'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateCategory'}">Create Category</router-link>
             </li>
             <li v-if="canLogout" class="nav-item">
               <router-link :to="{name: 'CreateUser'}" tag="a" class="nav-link" :class="{active: this.$router.currentRoute.name === 'CreateUser'}">Create User</router-link>
-            </li> -->
+            </li>
           </ul>
           <form v-if="canLogout" class="d-flex" @submit.prevent="logout">
             <button class="btn btn-outline-secondary" type="submit">Logout</button>

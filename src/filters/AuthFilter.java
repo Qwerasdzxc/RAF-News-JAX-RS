@@ -4,13 +4,15 @@ import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 
-import resources.NewsResource;
+import resources.UserResource;
 import services.UserService;
 
 import java.io.IOException;
 import java.util.List;
 
+@Provider
 public class AuthFilter implements ContainerRequestFilter {
 
     @Inject
@@ -40,7 +42,7 @@ public class AuthFilter implements ContainerRequestFilter {
 
         List<Object> matchedResources = req.getUriInfo().getMatchedResources();
         for (Object matchedResource : matchedResources) {
-            if (matchedResource instanceof NewsResource) {
+            if (matchedResource instanceof UserResource) {
                 return true;
             }
         }

@@ -1,5 +1,8 @@
 package main;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.inject.Singleton;
 import javax.ws.rs.ApplicationPath;
 
@@ -7,6 +10,8 @@ import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 
+import filters.AuthFilter;
+import filters.CorsFilter;
 import repositories.category.CategoryRepository;
 import repositories.category.MySQLCategoryRepository;
 import repositories.comment.CommentRepository;
@@ -47,6 +52,8 @@ public class RafNewsApplication extends ResourceConfig {
             }
         };
         register(binder);
+        register(AuthFilter.class);
+        register(CorsFilter.class);
 
         packages("resources");
     }

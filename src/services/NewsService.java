@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.ws.rs.PathParam;
 
 import models.News;
 import repositories.news.NewsRepository;
@@ -14,6 +15,10 @@ public class NewsService {
 	
 	public News findById(int newsId) {
 		return repository.findById(newsId);
+	}
+	
+	public void recordView(int newsId) {
+		repository.recordView(newsId);
 	}
 	
 	public List<News> searchNews(int page, String query) {

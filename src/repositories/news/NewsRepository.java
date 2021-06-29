@@ -10,6 +10,8 @@ public interface NewsRepository {
 	
 	List<News> searchNews(int page, String query);
 	
+	void recordView(int newsId);
+	
 	List<News> getNewsForCategory(int page, int categoryId);
 	
 	List<News> getAllNews(int page);

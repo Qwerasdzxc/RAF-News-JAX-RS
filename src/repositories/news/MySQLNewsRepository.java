@@ -384,4 +384,42 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
         return news;
 	}
 
+	@Override
+	public void recordView(int newsId) {
+		Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = this.newConnection();
+            
+            // Check if news exists:
+            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE newsId = ? ");
+            preparedStatement.setInt(1, newsId);
+            resultSet = preparedStatement.executeQuery();
+            
+            if (resultSet == null || !resultSet.next())
+            	throw new Exception();         
+            
+            // Update news:
+            closeStatement(preparedStatement);
+            closeResultSet(resultSet);
+            preparedStatement = connection.prepareStatement("UPDATE news AS n SET n.viewCount = n.viewCount + 1 WHERE n.newsId = ?");
+            preparedStatement.setInt(1, newsId);
+            preparedStatement.executeUpdate();
+
+            preparedStatement.close();
+            connection.close();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (resultSet != null) {
+                this.closeResultSet(resultSet);
+            }
+            this.closeStatement(preparedStatement);
+            this.closeConnection(connection);
+        }
+	}
+
 }

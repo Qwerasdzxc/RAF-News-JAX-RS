@@ -90,9 +90,10 @@ export default {
     }
   },
   mounted() {
+    this.$axios.post(`news/record-view/${this.$route.params.id}`).then(() => {});
     this.$axios.get(`tags/tags-by-news?newsId=${this.$route.params.id}`).then((response) => {
         this.tags = response.data;
-    })
+    });
     this.$axios.get(`comments/${this.$route.params.id}`).then((response) => {
         this.comments = response.data;
     });

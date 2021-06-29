@@ -30,6 +30,12 @@ public class NewsResource {
 		return service.findById(newsId);
 	}
 	
+	@POST
+	@Path("/record-view/{id}")
+	public void recordView(@PathParam("id") int newsId) {
+		service.recordView(newsId);
+	}
+	
 	@GET
 	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)

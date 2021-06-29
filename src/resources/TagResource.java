@@ -50,6 +50,7 @@ public class TagResource {
 	}
 	
 	@GET
+	@Path("/find-by-keyword")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Tag findByKeyword(@QueryParam("keyword") String keyword) {
 		return service.findByKeyword(keyword);

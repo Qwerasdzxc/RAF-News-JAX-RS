@@ -64,7 +64,7 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM news LIMIT 10 ORDER BY created DESC");
+            preparedStatement = connection.prepareStatement("SELECT * FROM news ORDER BY created DESC LIMIT 10");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -103,7 +103,7 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE title LIKE ? OR content LIKE ? LIMIT 10 OFFSET ? ORDER BY created DESC");
+            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE title LIKE ? OR content LIKE ? ORDER BY created DESC LIMIT 10 OFFSET ?");
             preparedStatement.setString(1, "%" + query + "%");
             preparedStatement.setString(2, "%" + query + "%");
             preparedStatement.setInt(3, (page - 1) * 10);
@@ -145,7 +145,7 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE categoryId = ? LIMIT 10 OFFSET ? ORDER BY created DESC");
+            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE categoryId = ? ORDER BY created DESC LIMIT 10 OFFSET ? ");
             preparedStatement.setInt(1, categoryId);
             preparedStatement.setInt(2, (page - 1) * 10);
             resultSet = preparedStatement.executeQuery();
@@ -212,7 +212,7 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE created BETWEEN NOW() - INTERVAL 30 DAY AND NOW() LIMIT 10 ORDER BY viewCount DESC");
+            preparedStatement = connection.prepareStatement("SELECT * FROM news WHERE created BETWEEN NOW() - INTERVAL 30 DAY AND NOW() ORDER BY viewCount DESC LIMIT 10");
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -341,6 +341,46 @@ public class MySQLNewsRepository extends MySQLAbstractRepository implements News
             this.closeStatement(preparedStatement);
             this.closeConnection(connection);
         }
+	}
+
+	@Override
+	public List<News> getAllNews(int page) {
+		List<News> news = new ArrayList<News>();
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            connection = this.newConnection();
+
+            preparedStatement = connection.prepareStatement("SELECT * FROM news ORDER BY created DESC LIMIT 10 OFFSET ?");
+            preparedStatement.setInt(1, (page - 1) * 10);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int newsId = resultSet.getInt("newsId");
+                int categoryId = resultSet.getInt("categoryId");
+                int authorId = resultSet.getInt("authorId");
+                int viewCount = resultSet.getInt("viewCount");
+                String title = resultSet.getString("title");
+                String content = resultSet.getString("content");
+                java.util.Date created = resultSet.getTimestamp("created");
+                news.add(new News(newsId, categoryId, authorId, viewCount, title, content, created));
+            }
+
+            resultSet.close();
+            preparedStatement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.closeStatement(preparedStatement);
+            this.closeResultSet(resultSet);
+            this.closeConnection(connection);
+        }
+
+        return news;
 	}
 
 }

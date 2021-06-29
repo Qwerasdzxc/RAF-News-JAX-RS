@@ -21,6 +21,14 @@ public class Comment {
 	private String content;
 	
 	private Date created;
+	
+	public Comment() {}
+
+	public Comment(Integer newsId, String authorName, String content) {
+		this.newsId = newsId;
+		this.authorName = authorName;
+		this.content = content;
+	}
 
 	public Comment(int commentId, Integer newsId, String authorName, String content, Date created) {
 		this.commentId = commentId;

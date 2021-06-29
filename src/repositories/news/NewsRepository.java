@@ -12,6 +12,8 @@ public interface NewsRepository {
 	
 	List<News> getNewsForCategory(int page, int categoryId);
 	
+	List<News> getAllNews(int page);
+	
 	List<News> getRecentNews();
 	
 	List<News> getPopularNews();

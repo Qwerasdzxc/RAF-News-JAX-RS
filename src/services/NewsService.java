@@ -20,6 +20,10 @@ public class NewsService {
 		return repository.searchNews(page, query);
 	}
 	
+	public List<News> getAllNews(int page) {
+		return repository.getAllNews(page);
+	}
+	
 	public List<News> getNewsForCategory(int page, int categoryId) {
 		return repository.getNewsForCategory(page, categoryId);
 	}

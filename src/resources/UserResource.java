@@ -72,7 +72,7 @@ public class UserResource {
 	@PUT
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public User updateUser(@PathParam("userId") int userId, String email, String name, String surname, boolean isAdmin) {
-		return service.updateUser(userId, email, name, surname, isAdmin);
+	public User updateUser(@PathParam("userId") int userId, @Valid User user) {
+		return service.updateUser(userId, user.getEmail(), user.getName(), user.getSurname(), user.isAdmin());
 	}
 }

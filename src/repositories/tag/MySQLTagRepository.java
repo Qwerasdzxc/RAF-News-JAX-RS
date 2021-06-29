@@ -26,7 +26,7 @@ public class MySQLTagRepository extends MySQLAbstractRepository implements TagRe
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM tag AS t WHERE t.id = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM tag WHERE tagId = ?");
             preparedStatement.setInt(1, tagId);
             resultSet = preparedStatement.executeQuery();
 

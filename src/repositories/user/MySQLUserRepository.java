@@ -20,7 +20,7 @@ public class MySQLUserRepository extends MySQLAbstractRepository implements User
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE userId = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE userId = ?");
             preparedStatement.setInt(1, userId);
             resultSet = preparedStatement.executeQuery();
 
@@ -60,7 +60,7 @@ public class MySQLUserRepository extends MySQLAbstractRepository implements User
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM users WHERE email = ?");
+            preparedStatement = connection.prepareStatement("SELECT * FROM user WHERE email = ?");
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
 
@@ -101,7 +101,7 @@ public class MySQLUserRepository extends MySQLAbstractRepository implements User
         try {
             connection = this.newConnection();
 
-            preparedStatement = connection.prepareStatement("SELECT * FROM user LIMIT 10 OFFSET ? ORDER BY created DESC");
+            preparedStatement = connection.prepareStatement("SELECT * FROM user LIMIT 10 OFFSET ?");
             preparedStatement.setInt(1, (page - 1) * 10);
             resultSet = preparedStatement.executeQuery();
 

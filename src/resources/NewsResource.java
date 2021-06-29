@@ -31,9 +31,17 @@ public class NewsResource {
 	}
 	
 	@GET
+	@Path("/search")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<News> searchNews(@QueryParam("page") int page, @QueryParam("query") String query) {
 		return service.searchNews(page, query);
+	}
+	
+	@GET
+	@Path("/all")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<News> getAllNews(@QueryParam("page") int page) {
+		return service.getAllNews(page);
 	}
 	
 	@GET
@@ -78,7 +86,7 @@ public class NewsResource {
 	}
 	
 	@DELETE
-	public void deleteNews(int newsId) {
+	public void deleteNews(@QueryParam("newsId") int newsId) {
 		service.deleteNews(newsId);
 	}
 }
